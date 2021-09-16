@@ -1,28 +1,52 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="todo-list">
+    <div class="todo-list-container">
+      <form>
+        <label for="todoitem">Task:</label>
+        <input
+          type="text"
+          v-model="input"
+          id="todoitem"
+          placeholder="Add new task"
+        />
+        <button type="button" v-on:click.prevent="anadirElemento">Add</button>
+      </form>
+      <Items :todos="todos" @borrarItem="borrarElemento" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Items from "./components/items.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Items,
+  },
+
+  data() {
+    return {
+      todos: [],
+    };
+  },
+  methods: {
+    anadirElemento() {
+      this.todos.push(this.input);
+      this.input = "";
+    },
+    borrarElemento(index) {
+      this.todos.splice(index, 1);
+    },
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.todo-list-container {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 20px;
+  align-items: center;
 }
 </style>
